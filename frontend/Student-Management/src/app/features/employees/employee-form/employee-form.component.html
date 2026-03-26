@@ -1,0 +1,117 @@
+<div class="form-container">
+  <div class="form-card">
+    <h2>{{ isEditMode ? 'Edit Employee' : 'Add Employee' }}</h2>
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+
+    <div *ngIf="loading && !isEditMode" class="loading">
+      Loading...
+    </div>
+
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" *ngIf="!loading || isEditMode">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          class="form-input"
+          [class.is-invalid]="name?.invalid && name?.touched"
+          placeholder="Enter employee name"
+        />
+        <span *ngIf="name?.invalid && name?.touched" class="error-text">
+          Name is required
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="form-input"
+          [class.is-invalid]="email?.invalid && email?.touched"
+          placeholder="Enter email address"
+        />
+        <span *ngIf="email?.hasError('required') && email?.touched" class="error-text">
+          Email is required
+        </span>
+        <span *ngIf="email?.hasError('email') && email?.touched" class="error-text">
+          Please enter a valid email
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="department">Department:</label>
+        <input
+          type="text"
+          id="department"
+          formControlName="department"
+          class="form-input"
+          [class.is-invalid]="department?.invalid && department?.touched"
+          placeholder="Enter department"
+        />
+        <span *ngIf="department?.invalid && department?.touched" class="error-text">
+          Department is required
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="salary">Salary:</label>
+        <input
+          type="number"
+          id="salary"
+          formControlName="salary"
+          class="form-input"
+          [class.is-invalid]="salary?.invalid && salary?.touched"
+          placeholder="Enter salary"
+        />
+        <span *ngIf="salary?.hasError('required') && salary?.touched" class="error-text">
+          Salary is required
+        </span>
+        <span *ngIf="salary?.hasError('min') && salary?.touched" class="error-text">
+          Salary must be a positive number
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="dateOfJoining">Date of Joining:</label>
+        <input
+          type="date"
+          id="dateOfJoining"
+          formControlName="dateOfJoining"
+          class="form-input"
+          [class.is-invalid]="dateOfJoining?.invalid && dateOfJoining?.touched"
+        />
+        <span *ngIf="dateOfJoining?.invalid && dateOfJoining?.touched" class="error-text">
+          Date of joining is required
+        </span>
+      </div>
+
+      <div class="form-actions">
+        <button
+          type="submit"
+          class="submit-btn"
+          [disabled]="loading || employeeForm.invalid"
+        >
+          {{ loading ? 'Saving...' : 'Save' }}
+        </button>
+        <button
+          type="button"
+          class="cancel-btn"
+          (click)="onCancel()"
+          [disabled]="loading"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

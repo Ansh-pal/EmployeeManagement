@@ -1,0 +1,52 @@
+<div class="employee-container">
+  <div class="employee-header">
+    <h1>Employee List</h1>
+    <button
+      *ngIf="canModify()"
+      class="add-btn"
+      (click)="onAddEmployee()"
+    >
+      + Add Employee
+    </button>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    Loading employees...
+  </div>
+
+  <div *ngIf="!loading && employees.length === 0" class="no-data">
+    No employees found.
+  </div>
+
+  <table *ngIf="!loading && employees.length > 0" class="employee-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Department</th>
+        <th>Salary</th>
+        <th>Date of Joining</th>
+        <th *ngIf="canModify()">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let emp of employees">
+        <td>{{ emp.id }}</td>
+        <td>{{ emp.name }}</td>
+        <td>{{ emp.email }}</td>
+        <td>{{ emp.department }}</td>
+        <td>{{ emp.salary | currency }}</td>
+        <td>{{ emp.dateOfJoining | date: 'MMM dd, yyyy' }}</td>
+        <td *ngIf="canModify()" class="actions">
+          <button class="edit-btn" (click)="onEditEmployee(emp.id)">Edit</button>
+          <button class="delete-btn" (click)="onDeleteEmployee(emp.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

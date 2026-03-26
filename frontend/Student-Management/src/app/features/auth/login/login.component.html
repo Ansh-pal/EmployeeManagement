@@ -1,0 +1,60 @@
+<div class="login-container">
+  <div class="login-card">
+    <h2>Login</h2>
+    
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input
+          type="text"
+          id="username"
+          formControlName="username"
+          class="form-input"
+          [class.is-invalid]="username?.invalid && username?.touched"
+          placeholder="Enter your username"
+        />
+        <span *ngIf="username?.invalid && username?.touched" class="error-text">
+          Username is required
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          class="form-input"
+          [class.is-invalid]="password?.invalid && password?.touched"
+          placeholder="Enter your password"
+        />
+        <span *ngIf="password?.hasError('required') && password?.touched" class="error-text">
+          Password is required
+        </span>
+        <span *ngIf="password?.hasError('minlength') && password?.touched" class="error-text">
+          Password must be at least 6 characters
+        </span>
+      </div>
+
+      <button
+        type="submit"
+        class="submit-btn"
+        [disabled]="loading || loginForm.invalid"
+      >
+        {{ loading ? 'Logging in...' : 'Login' }}
+      </button>
+    </form>
+
+    <p class="register-link">
+      Don't have an account? <a routerLink="/auth/register">Register here</a>
+    </p>
+  </div>
+</div>
