@@ -1,0 +1,20 @@
+<nav class="navbar">
+  <div class="navbar-container">
+    <h1 class="navbar-title">EMS</h1>
+
+    <div class="navbar-links">
+      <!-- Not logged in -->
+      <ng-container *ngIf="!isLoggedIn">
+        <a routerLink="/auth/login" class="nav-link">Login</a>
+        <a routerLink="/auth/register" class="nav-link">Register</a>
+      </ng-container>
+
+      <!-- Logged in -->
+      <ng-container *ngIf="isLoggedIn">
+        <a routerLink="/employees" class="nav-link">Employees</a>
+        <span class="role-badge">{{ userRole }}</span>
+        <button class="logout-btn" (click)="onLogout()">Logout</button>
+      </ng-container>
+    </div>
+  </div>
+</nav>
